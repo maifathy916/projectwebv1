@@ -1,0 +1,258 @@
+<!Doctype html>
+<html>
+ <head>
+  <title>Learn the English Letters</title>
+   <style>
+   div button
+   {
+padding: 6px 12px;
+margin-bottom: 10;
+font-size: 20px;
+line-height: 1.42857143;
+text-align: center;
+white-space: nowrap;
+vertical-align: middle;
+cursor: pointer;
+border: 1px solid transparent;
+display:inline-block;
+background:lightblue;
+border-radius:6px;
+ border-color:#333;
+   }
+   div button:hover
+   { 
+   color:white;
+   background-color:#555;
+   }
+   input[type="number"]
+   {
+   width:50px;
+   height:30px;
+   }
+   #label
+   {
+   font-size: 22px;
+   color:orange;
+   }
+   #header{
+    font-size:40px;
+   color:maroon;
+   }
+   #body
+   { 
+   background-image:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('Images/bodyCover.jpg');
+   background-repeat:no-repeat;
+   background-position:center;
+   background-size:cover;
+   background-attachment:fixed;
+   background-color:white;
+   padding-left:30px;
+   height:350px;
+   
+   }
+
+   </style>
+  
+ </head>
+ <body id="body">
+  <div id="page">
+    <h1 id="header">Learn the English Letters</h1>
+    <label id="label">Number of Letters:</label>
+    <input type = "number" id = "number" min="1" max="26"/>
+    <button id = "ok" type = "button" >Generate</button>
+	<span id="result"></span>
+ 
+  <div id = "letters" hidden="true">
+  </div>
+  <div id="images" hidden="true">
+     <image src="" id="img">
+  </div>
+  </div>
+  </body>
+  
+<script>
+                                 /*comment...
+                             each variable in project*/
+                         var generate,randomNumber,serialNumber,
+	                      i,getarr=new Array(),randomSerial,
+	                       listOfbutton,val,countgenerate=0,
+	                        countletter=0,max=26,min=1;
+							
+  	                        /*comment....
+							generate tages in body about getElementById
+							*/
+                           generate= document.getElementById("ok"); 
+			               serialNumber=document.getElementById("number"); 
+                           images= document.getElementById("images");
+
+						   
+						   
+						 /*commint...
+                              this array to storage letters and 
+                              generate its by create new item 
+							  and appendChild each element*/						 
+	  getarr=["x","c","v","b","n","m","q","i","y","t","e","w","o","p","f","d","s","a","g","z","l","x","c","h","j","k"];
+	 
+                 
+                                   
+                           /*comment...
+						   clear loaclstorage each 5000
+						   */
+                                setInterval(function(e)
+								 { 
+				                   // localStorage.clear();
+												 
+                                  }, 5000);
+													   
+											
+											
+											
+								   /*  comment  .......
+                                 handel two event 1:genetate button 2:random letters button 
+								 and call function TempGenButton,TempLettButton
+								 */
+                         generate.addEventListener("click", function(e)
+	                    {        
+
+
+						//check the max,min possible value the user can enters in input type number;
+						            if(max<=serialNumber.value)
+				                     {
+				                     serialNumber.value=max;
+				                   //console.log( serialNumber.value);
+				                     }
+                                 else if(min>=serialNumber.value)
+				                    {
+                                    serialNumber.value=min;
+				 
+				                 //console.log( serialNumber.value);
+				                   }
+								   
+								   /*comment.....
+								   كل مره بفضي ال 
+								   div letters 
+								     علشان يستقبل قيمه
+									 random جديده 
+									 */ 
+			               document.getElementById("letters").innerHTML='';
+						 
+						 
+						 /*comment
+						 for loop بتلف علي 
+						 input type numbers وبتطلع 
+						 random letters 
+						 بي عدد ال value 
+						في ال input type numbers
+						 */
+		                        for( i=0;i<serialNumber.value;i++)
+		                            { 
+		 
+		                           randomNumber=Math.floor(Math.random()*(getarr.length));
+					                   randomSerial = getarr[randomNumber];
+		                           listOfbutton=document.createElement("button");
+                                        val=document.createTextNode(getarr[i]);
+                                         listOfbutton.appendChild(val);
+					       document.getElementById("letters").appendChild(listOfbutton).innerHTML=randomSerial;
+						          document.getElementById("letters").removeAttribute("hidden"); 
+							document.getElementById("letters").appendChild(listOfbutton).addEventListener("click", function(e)
+	                         {
+			                              
+		                         // console.log(e.target.textContent);
+					              //console.log(randomSerial);
+					          document.getElementById("img").src ="Images/"+e.target.textContent+".jpg";
+					              document.getElementById("img").style.width ='250px';
+					 	          document.getElementById("img").style.height ='240px'; 
+						          document.getElementById("images").removeAttribute("hidden");
+                                              TempLettButton(e);
+										
+									});
+									}
+										TempGenButton(e);
+                                 } );
+								 /*  comment  .......
+							 this function to set event type ,target,number of generate button and date 
+							 and retrive (get)to all set items in localstorage
+							 */
+									function TempGenButton(e)
+									{
+									
+									   countgenerate=countgenerate+1;
+                                    localStorage.setItem("number of generate button", countgenerate);
+									localStorage.setItem( "event target", e.target.textContent);
+									localStorage.setItem(" event type", e.type);
+									localStorage.setItem("evTimeGButton",Date());
+								    localStorage.getItem("event target");
+									localStorage.getItem("event type");
+						            localStorage.getItem("number of generate button");
+									localStorage.getItem("evTimeGButton");
+										
+				                      
+									}
+						/*  comment  .......	
+					this function to set event type ,target,number of generate button 
+					and date and retrive (get)to all set items in localstorage
+					*/
+					                 function TempLettButton(e)
+									{  
+									   countletter =countletter+1; 
+                                    localStorage.setItem("number of letters button",countletter);
+									localStorage.setItem( "event_target", e.target.textContent);
+									localStorage.setItem(" event_type", e.type);
+									localStorage.setItem("evTimeLettButton",Date());
+								    localStorage.getItem("event_target");
+									localStorage.getItem("event_type");
+						            localStorage.getItem("number of letters button");
+									localStorage.getItem("evTimeLettButton");
+						
+									}
+					
+					
+					/*  comment  .......
+	                           handel event load and call function TempWindLoad
+							   */
+	                               window.addEventListener("load", function(e)
+								   {
+	                                           
+                                   alert("Welcoming in the website Learn the English Letters");
+										TempWindLoad(e);
+								   });
+								    /*  comment  .......
+									this function to set event type ,target,date
+									and retrive (get)to all set items in localstorage
+									*/
+	  
+	                                 function TempWindLoad(e)
+									{   
+									    localStorage.setItem("evTimeLoad",Date());
+									    localStorage.setItem( "evTargetLoad", e.target);
+									    localStorage.setItem("evTypeLoad", e.type);
+										localStorage.getItem("evTargetLoad");
+										localStorage.getItem("evtypeLoad");
+										localStorage.getItem("evTimeLoad");
+										
+												
+								  }
+									 /* comment  .......			
+	                           handel event unload and call function TempWindUnLoad
+							   */
+                                   window.addEventListener("unload", function(e){ 
+                                         TempWindUnLoad(e);
+										 });
+		            
+	               /* comment  .......
+				   this function to set event type ,target, date 
+				   and retrive (get)to all set items in localstorage
+				   */
+	                             function TempWindUnLoad(e)
+									{  
+									   
+									localStorage.setItem("evTimeUnLoad",Date());
+									localStorage.setItem( "evTargetUnLoad", e.target);
+									localStorage.setItem("evTypeUnLoad", e.type);
+								    localStorage.getItem("evTargetUnLoad");
+								    localStorage.getItem("evtypeUnLoad");
+									localStorage.getItem("evTimeUnLoad");
+										
+									}
+	 </script>
+</html>
